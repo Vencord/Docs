@@ -1,8 +1,7 @@
 ---
-sidebar_position: 2
+title: Installing custom plugins
+description: How to install custom plugins in Vencord
 ---
-
-# Installing custom plugins
 
 :::danger
 
@@ -62,7 +61,7 @@ The last step is [rebuilding Vencord](./installing.md#building-vencord).
 
 Restart Discord and your plugin should show up in the plugins tab!
 
-:::warning
+:::caution
 Be careful not to accidentally create an empty folder inside your `userplugins` folder.
 
 If you get a `TypeError: Cannot read properties of undefined (reading 'localeCompare')` error, this is why.

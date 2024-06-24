@@ -1,8 +1,7 @@
 ---
-sidebar_position: 3
+title: Setting up your Editor
+description: Setting up your editor for Vencord development
 ---
-
-# Setting up your Editor
 
 We use Visual Studio Code to develop Vencord, and our configs and extensions are tailored to it!
 As such, we highly recommend you use VSCode.

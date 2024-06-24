@@ -1,8 +1,7 @@
 ---
-sidebar_position: 1
+title: Introduction
+description: Learn everything about Vencord development!
 ---
-
-# Introduction
 
 If you're here, it probably means you're trying to learn how to create Vencord plugins. You've come to the right place!
 

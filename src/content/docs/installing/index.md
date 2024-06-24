@@ -1,8 +1,7 @@
 ---
-sidebar_position: 1
+title: Installing Vencord
+description: How to install Vencord on your device
 ---
-
-# Installing from Source
 
 ## Prerequisites
 
