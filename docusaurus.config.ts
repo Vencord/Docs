@@ -5,7 +5,7 @@ import type * as Preset from "@docusaurus/preset-classic";
 const config: Config = {
     title: "Vencord Developer Docs",
     tagline: "The cutest documentation!",
-    favicon: "img/favicon.ico",
+    favicon: "img/favicon.png",
 
     // Set the production url of your site here
     url: "https://docs.vencord.dev",
@@ -48,19 +48,24 @@ const config: Config = {
 
     themeConfig: {
         // Replace with your project's social card
-        image: "img/docusaurus-social-card.jpg",
+        //image: "img/docusaurus-social-card.jpg",
         navbar: {
             title: "Vencord Developer Docs",
             logo: {
-                alt: "My Site Logo",
-                src: "img/logo.svg"
+                alt: "Vencord logo",
+                src: "img/favicon.png"
             },
             items: [
                 {
                     type: "docSidebar",
                     sidebarId: "tutorialSidebar",
                     position: "left",
-                    label: "Tutorial"
+                    label: "Docs"
+                },
+                {
+                    href: "https://vencord.dev",
+                    label: "Website",
+                    position: "right"
                 },
                 {
                     href: "https://github.com/Vencord",
@@ -76,8 +81,16 @@ const config: Config = {
                     title: "Docs",
                     items: [
                         {
-                            label: "Tutorial",
+                            label: "Introduction",
                             to: "/docs/intro"
+                        },
+                        {
+                            label: "Installing",
+                            to: "/docs/installing"
+                        },
+                        {
+                            label: "Creating Plugins",
+                            to: "/docs/creating-plugins"
                         }
                     ]
                 },
@@ -85,12 +98,17 @@ const config: Config = {
                     title: "Community",
                     items: [
                         {
-                            label: "GitHub",
-                            href: "https://github.com/Vencord"
-                        },
-                        {
                             label: "Discord",
                             href: "https://vencord.dev/discord"
+                        }
+                    ]
+                },
+                {
+                    title: "More",
+                    items: [
+                        {
+                            label: "GitHub",
+                            href: "https://github.com/Vencord"
                         },
                         {
                             label: "Official Website",
@@ -98,17 +116,8 @@ const config: Config = {
                         }
                     ]
                 }
-                /*{
-          title: 'More',
-          items: [
-            {
-              label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
-            },
-          ],
-        },*/
             ],
-            copyright: `Copyright © ${new Date().getFullYear()} Vencord. Built with Docusaurus!`
+            copyright: `Copyright © ${new Date().getFullYear()} Vencord contributors. Built with Docusaurus!`
         },
         prism: {
             theme: prismThemes.github,

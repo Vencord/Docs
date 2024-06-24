@@ -2,23 +2,36 @@ import clsx from "clsx";
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
-import HomepageFeatures from "@site/src/components/HomepageFeatures";
 import Heading from "@theme/Heading";
 
 import styles from "./index.module.css";
 
 function HomepageHeader() {
     const { siteConfig } = useDocusaurusContext();
+
     return (
         <header className={clsx("hero hero--primary", styles.heroBanner)}>
             <div className="container">
+                <img
+                    aria-hidden
+                    className={styles.mainImage}
+                    src={require("@site/static/img/cute-logo.avif").default}
+                />
+
                 <Heading as="h1" className="hero__title">
                     {siteConfig.title}
                 </Heading>
                 <p className="hero__subtitle">{siteConfig.tagline}</p>
+
                 <div className={styles.buttons}>
+                    <Link className="button button--secondary button--lg" to="/docs/installing">
+                        Install Vencord
+                    </Link>
                     <Link className="button button--secondary button--lg" to="/docs/intro">
-                        Docusaurus Tutorial - 5min ⏱️
+                        Developer Docs
+                    </Link>
+                    <Link className="button button--secondary button--lg" to="https://github.com/Vencord">
+                        Vencord Source Code
                     </Link>
                 </div>
             </div>
@@ -28,12 +41,11 @@ function HomepageHeader() {
 
 export default function Home(): JSX.Element {
     const { siteConfig } = useDocusaurusContext();
+
     return (
-        <Layout title={`Hello from ${siteConfig.title}`} description="Description will go into a meta tag in <head />">
+        <Layout title={siteConfig.title} description="The cutest documentation!">
             <HomepageHeader />
-            <main>
-                <HomepageFeatures />
-            </main>
+            <main></main>
         </Layout>
     );
 }

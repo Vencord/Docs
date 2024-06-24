@@ -20,4 +20,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 1em;
+}
+
+.mainImage {
+    width: 100%;
+    max-width: 500px;
 }
