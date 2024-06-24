@@ -63,6 +63,11 @@ const config: Config = {
                     label: "Docs"
                 },
                 {
+                    href: "https://github.com/Vencord/Docs",
+                    label: "Contribute to the Docs",
+                    position: "right"
+                },
+                {
                     href: "https://vencord.dev",
                     label: "Website",
                     position: "right"
