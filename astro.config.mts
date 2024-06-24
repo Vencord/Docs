@@ -6,7 +6,7 @@ export default defineConfig({
     site: "https://docs.vencord.dev",
     integrations: [
         starlight({
-            title: "Vencord Developer Docs",
+            title: "Vencord Docs",
             logo: {
                 src: "./src/assets/favicon.png"
             },
@@ -18,6 +18,7 @@ export default defineConfig({
                 github: "https://github.com/Vencord",
                 discord: "https://vencord.dev/discord"
             },
+            customCss: ["./src/style/custom.css"],
             lastUpdated: true,
             sidebar: [
                 {
