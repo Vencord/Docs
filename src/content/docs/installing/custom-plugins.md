@@ -18,7 +18,7 @@ If you run into issues and can't figure them out yourself, please stick to the [
 
 To add custom plugins, you need to build Vencord from source.
 
-If you haven't already done so, first follow the [Installing from Source](./installing.md) guide. 
+If you haven't already done so, first follow the [Installing from Source](/installing) guide. 
 
 The following instructions assume you have already done so.
 
@@ -26,12 +26,12 @@ The following instructions assume you have already done so.
 
 Open your Vencord folder. Inside it, you should find a folder called `src`. This folder houses all of Vencord's source code.
 
-If you don't have this folder, you have not read the previous instructions. Go back and first follow the [Installing from Source](./installing.md) guide.
+If you don't have this folder, you have not read the previous instructions. Go back and first follow the [Installing from Source](/installing) guide.
 
 ### Creating the `userplugins` folder
 
 All official plugins are stored in the `src/plugins` folder.
-However, unless you plan to [submit your plugin to the official repository](../creating-plugins//plugin-submission.md), you should not put your plugin there, as you will run into conflicts.
+However, unless you plan to [submit your plugin to the official repository](/plugins/submission), you should not put your plugin there, as you will run into conflicts.
 
 Instead, you will want to use the `src/userplugins` folder. This folder is reserved for custom / private plugins.
 
@@ -57,7 +57,7 @@ Place it inside the previously created userplugins folder.
 
 ### Building Vencord
 
-The last step is [rebuilding Vencord](./installing.md#building-vencord).
+The last step is [rebuilding Vencord](/installing#building-vencord).
 
 Restart Discord and your plugin should show up in the plugins tab!
 

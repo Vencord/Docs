@@ -8,7 +8,7 @@ import RequiredStar from "@vencord-docs/components/RequiredStar.astro"
 
 ## Prerequisites
 
-- A [development Vencord install](../installing/index.mdx)
+- A [development Vencord install](/installing)
 - VSCode with the extensions recommended by Vencord
 
 Other knowledge requirements include:
@@ -30,7 +30,7 @@ First, decide whether you want to use the `src/plugins` or `src/userplugins` fol
     <TabItem label="Plugin">
         Plugins inside `src/plugins` are tracked via git and are included in the official Vencord releases.
 
-        Use this location if you intend to [submit your plugin for inclusion in Vencord](./submission).
+        Use this location if you intend to [submit your plugin for inclusion in Vencord](/plugins/submission).
     </TabItem>
     <TabItem label="UserPlugin">
         Plugins inside `src/userplugins` are private. They are not tracked via git.
@@ -63,7 +63,7 @@ Start creating your plugin by adding an `index.ts` file inside your plugin's fol
 Type `vcPlugin` in the file, and you should automatically be suggested the "Define Plugin" template.
 
 :::note
-If this doesn't work for you, follow the [editor setup guide](../installing/editor-setup#installing-the-recommended-extensions)
+If this doesn't work for you, follow the [editor setup guide](/installing/editor-setup#installing-the-recommended-extensions)
 to install the Vencord Companion extension.
 :::
 
@@ -124,7 +124,7 @@ Save your file and it should automatically format it and insert the following li
 <Code lang="ts" mark={["Vendicated and contributors"]} code={
 `/*
  * Vencord, a Discord client mod
- * Copyright (c) ${new Date().getFullYear()} Vendicated and contributors
+ * Copyright (c) ${new Date().getFullYear()} Vendicated and contributors*
  * SPDX-License-Identifier: GPL-3.0-or-later
  */`
 }/>
@@ -133,7 +133,7 @@ If you want, you can change it from `Vendicated and contributors` to your own na
 But this is not strictly necessary, you own the code either way (and are already included in the "contributors" part).
 
 :::note
-If this doesn't work for you, follow the [editor setup guide](../installing/editor-setup#installing-the-recommended-extensions)
+If this doesn't work for you, follow the [editor setup guide](/installing/editor-setup#installing-the-recommended-extensions)
 to set up linting.
 :::
 
