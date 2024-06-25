@@ -11,29 +11,26 @@ hero:
       link: /intro
       icon: right-arrow
       variant: primary
-    - text: Join our Discord community
+    - text: Join our community
       link: https://vencord.dev/discord
-      icon: external
+      icon: discord
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-{/* TODO */}
-
-
-## Next steps
-
 <CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
+	<Card title="Powerful plugin API" icon="rocket">
+		Quickly add context menus, slash commands, message action buttons, message accessories (like embeds or bot buttons),
+		and much more!
 	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
+	<Card title="Typescript, JSX, CSS, modular" icon="seti:typescript">
+		Plugins can make use of Typescript, JSX syntax, import css files and modularise their code!
+		Vencord and many Discord modules are fully typed for your convenience.
 	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
+	<Card title="RegExp code patches" icon="pencil">
+		Rewrite Discord's code in place using RegExp replacements instead of boring old monkey patches.
 	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
+	<Card title="Native Capabilities" icon="node">
+		Plugins can define native functions that have full access to Node.js apis without compromising on security.
 	</Card>
 </CardGrid>
