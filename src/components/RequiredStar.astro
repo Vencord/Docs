@@ -1,0 +1,16 @@
+---
+export interface Props {
+    title?: string;
+    name?: string;
+}
+
+const { title = `This ${Astro.props.name || "option"} is required.` } = Astro.props;
+---
+
+<span title={title}>*</span>
+
+<style>
+    span {
+        color: var(--sl-color-red);
+    }
+</style>
