@@ -48,13 +48,30 @@ The folder's name should be in camelCase. For example `myFirstPlugin` (NOT `MyFi
 ### Plugin Structure
 
 There are 3 special files you can create here:
-- `index.ts` / `index.tsx`<RequiredStar name="file"/>: Your plugin's entry point.
-- `README.md`<RequiredStar name="file"/>: Markdown documentation for your plugin. This file
-    should contain a description of your plugin and instructions how to use it.
-    Screenshots, videos or gifs are highly recommended.
-    This will be used to generate a custom webpage for your plugin at https://vencord.dev/plugins/YourPlugin.
-- `native.ts`: Your plugin's native entry point. This code will run inside NodeJS instead of the browser.
-    If you need to run code on the system, for example to read/write files, you can do so via this file.
+
+<Tabs>
+    <TabItem label="index.ts(x)" icon="seti:react">
+        Your plugin's entry point. This is where most of your plugin's code will live and where you define things
+        like its name and description.
+
+        Code in this file runs in the browser, so you can use all browser APIs here.  
+        Node.js APIs like `fs` or `child_process` are not available here.
+        If you need them, you can do so in the `native.ts` file.
+    </TabItem>
+    <TabItem label="README.md" icon="seti:markdown">
+        Markdown documentation for your plugin. This file should contain a description
+        of your plugin and instructions how to use it. Screenshots, videos or gifs
+        are highly recommended. This will be used to generate a custom webpage for your plugin at
+        https://vencord.dev/plugins/YourPlugin.
+    </TabItem>
+    <TabItem label="native.ts" icon="seti:windows">
+        Your plugin's native entry point.
+        This code will run inside NodeJS instead of the browser.
+        You can use all Node.JS apis here, such as `fs` or `child_process`.
+
+        Browser APIs are not available here. If you need them, you can do so in the `index.ts` file.
+    </TabItem>
+</Tabs>
 
 ### Plugin Boilerplate
 
