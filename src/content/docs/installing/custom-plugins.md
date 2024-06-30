@@ -37,6 +37,11 @@ Instead, you will want to use the `src/userplugins` folder. This folder is reser
 
 This folder won't exist yet, so you'll have to first create it. Navigate to the `src` folder and create a new folder called `userplugins`.
 
+:::tip 
+Replace `src` with `dist` if you use [vesktop](https://github.com/Vencord/Vesktop).
+i.e., `dist/userplugins` instead of `src/userplugins`
+:::
+
 ### Adding your plugin
 
 Inside the `userplugins` folder, you can now add your plugin.
