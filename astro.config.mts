@@ -1,6 +1,8 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import starlightLinksValidator from "starlight-links-validator";
+import { rehypeHeadingIds } from "@astrojs/markdown-remark";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 // https://astro.build/config
 export default defineConfig({
@@ -21,7 +23,7 @@ export default defineConfig({
                 github: "https://github.com/Vencord",
                 discord: "https://vencord.dev/discord"
             },
-            customCss: ["./src/style/custom.css"],
+            customCss: ["./src/style/custom.css", "./src/style/headingLinks.css"],
             lastUpdated: true,
             sidebar: [
                 {
@@ -38,5 +40,17 @@ export default defineConfig({
                 }
             ]
         })
-    ]
+    ],
+
+    markdown: {
+        rehypePlugins: [
+            rehypeHeadingIds,
+            [
+                rehypeAutolinkHeadings,
+                {
+                    behavior: "wrap"
+                }
+            ]
+        ]
+    }
 });
