@@ -62,7 +62,7 @@ The last step is [rebuilding Vencord](/installing#building-vencord).
 Restart Discord and your plugin should show up in the plugins tab!
 
 :::caution
-Be careful not to accidentally create an empty folder inside your `userplugins` folder.
+If you get a `TypeError: Cannot read properties of undefined (reading 'localeCompare')` error, you need to also [set up the plugin boilerplate code](/plugins#plugin-boilerplate).
 
-If you get a `TypeError: Cannot read properties of undefined (reading 'localeCompare')` error, this is why.
+Try building and restarting Discord after the boilerplate is set up, and the error should disappear.
 :::
