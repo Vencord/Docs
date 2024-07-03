@@ -62,7 +62,7 @@ The last step is [rebuilding Vencord](/installing#building-vencord).
 Restart Discord and your plugin should show up in the plugins tab!
 
 :::caution
-Be careful not to accidentally create an empty folder inside your `userplugins` folder.
+Be careful not to accidentally create an empty folder or an empty plugin file inside your `userplugins` folder.
 
 If you get a `TypeError: Cannot read properties of undefined (reading 'localeCompare')` error, this is why.
 :::
