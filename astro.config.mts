@@ -37,6 +37,10 @@ export default defineConfig({
                 {
                     label: "Plugin Development",
                     autogenerate: { directory: "plugins" }
+                },
+                {
+                    label: "Miscellaneous",
+                    autogenerate: { directory: "misc" }
                 }
             ]
         })
