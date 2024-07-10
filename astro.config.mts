@@ -31,16 +31,29 @@ export default defineConfig({
                     link: "/intro"
                 },
                 {
-                    label: "Installation & Preparation",
-                    autogenerate: { directory: "installing" }
+                    label: "Contributing to Vencord",
+                    autogenerate: { directory: "contribute" }
                 },
+                // {
+                //     label: "Installation & Preparation",
+                //     autogenerate: { directory: "installing" }
+                // },
                 {
                     label: "Plugin Development",
-                    autogenerate: { directory: "plugins" }
+                    items: [
+                        {
+                            label: "Installation & Preparation",
+                            autogenerate: { directory: "installing" }
+                        },
+                        {
+                            label: "Building the Plugin",
+                            autogenerate: { directory: "plugins" }
+                        }
+                    ]
                 },
                 {
-                    label: "Miscellaneous",
-                    autogenerate: { directory: "misc" }
+                    label: "Additional Information",
+                    autogenerate: { directory: "additional" }
                 }
             ]
         })

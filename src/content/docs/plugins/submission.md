@@ -18,7 +18,7 @@ description: How to submit your plugin to the official Vencord repository
     - Message Pruner
     - Animated Status
     - Nitro Snipers
-    - Selfbots
+    - [Selfbots](https://support.discord.com/hc/en-us/articles/115002192352-Automated-User-Accounts-Self-Bots)
 
 - Plugins that replace text in your messages, like FxTwitter (use [TextReplace](https://vencord.dev/plugins/TextReplace))
 - Plugins that just hide UI elements like the gif button (use quick CSS instead)
@@ -41,7 +41,7 @@ Violating any of the rules may result in being blocked from creating any further
 :::
 
 ### Creating a Pull Request
-:::caution
+:::caution[Warning]
 Pull requests can be made to the `dev` and `main` branch of [Vencord](https://github.com/Vendicated/Vencord). Unless you are an advanced user, you should prefer the `main` branch. This is because the `dev` branch might contain unstable changes and gets force-pushed frequently, which could cause conflicts in your pull request.
 :::
 
@@ -50,6 +50,6 @@ Now that you have everything ready, you can start making a pull request to Venco
 If you are new to Git, check [this Guide](https://opensource.com/article/19/7/create-pull-request-github). **That guide explains how to make pull requests!** 
 Make sure that your title mentions you're awaiting approval for a Plugin.
 
-After creating your PR your code will go through checks and needs to get approved before getting pushed into the `main` (or `dev`) build of Vencord. 
+After creating the PR your code will go through checks and needs to get approved before getting pushed into the `main` (or `dev`) build of Vencord. 
 
 However, if your PR get's denied don't worry. Vencords Maintainers give comments on approval/denial, so you can always fix any issues. Unless your plugin is in violation of rules.
