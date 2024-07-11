@@ -33,7 +33,7 @@ A great way to get feedback and check the rules is by creating an Issue:
 
 - Head to the [Plugin requests](https://github.com/Vencord/plugin-requests/issues/new) and create a new issue.
    - Make sure that no similar issue or pull request exists already.
-   - Make sure to follow any rules given in the [Code of Conduct](https://github.com/Vendicated/Vencord/blob/02092a985c2f95f2f265387a849db8cec95742a8/CODE_OF_CONDUCT.md) & [Pre-Flight](http://localhost:4321/plugins/submission/#pre-flight).
+   - Make sure to follow any rules given in the [Code of Conduct](/coc) & [Pre-Flight](/plugins/submission/#pre-flight).
 :::
 
 :::danger

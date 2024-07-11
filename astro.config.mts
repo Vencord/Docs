@@ -32,12 +32,12 @@ export default defineConfig({
                 },
                 {
                     label: "Contributing to Vencord",
-                    autogenerate: { directory: "contribute" }
+                    link: "/contribute"
                 },
-                // {
-                //     label: "Installation & Preparation",
-                //     autogenerate: { directory: "installing" }
-                // },
+                {
+                    label: "Code of Conduct",
+                    link: "/coc"
+                },
                 {
                     label: "Plugin Development",
                     items: [
@@ -52,9 +52,22 @@ export default defineConfig({
                     ]
                 },
                 {
+                    label: "Advanced Development",
+                    items: [
+                        {
+                            label: "Utils",
+                            autogenerate: { directory: "utils" }
+                        }
+                    ]
+                },
+                {
                     label: "Additional Information",
                     autogenerate: { directory: "additional" }
-                }
+                },
+                // {
+                //     label: "Troubleshooting",
+                //     autogenerate: { directory: "troubleshoot" }
+                // }
             ]
         })
     ],
