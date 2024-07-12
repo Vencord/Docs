@@ -2,20 +2,26 @@
 title: Toasts
 description: Showing quick notifications for users
 ---
+
+import { Aside, Tabs, TabItem, Code, Icon } from '@astrojs/starlight/components';
+
 ## What are Toasts?
-Toasts are used widely across Discord and other Websites/Services. 
-There are two options of toasts to use in Vencord. `Toast` and `showToast`. 
-The main difference are the options between those two.
+Toasts are used widely across Discord and other Websites/Services on certain Events like "Success" or "Failure" 
+There are two options of toasts to use in Vencord. `copyWithToast` and `showToast`. 
+The main difference are the usage between those two.
 
 :::tip[What does that mean?]
-`showToast` still uses `Toast` under the hood, but has easier usage than Toast, however you cannot configure it as much as `Toast`.
-Both can be imported from `@webpack/common` (alias `Vencord/src/webpack/common/index`)
+Both Toasts still use `Toast` under the hood, but have different tasks from eachother.
+
+`showToast` can be imported from `@webpack/common` (alias `src/webpack/common/index`)
+`copyWithToast` can be imported from `@utils/misc` (alias `src/utils/misc`)
 :::
 
 ### showToast()
 The function expects following parameters,
 ```ts
-message: string, type = ToastType.MESSAGE //ToastType.MESSAGE: 0,
+message: string, 
+type = ToastType.MESSAGE //ToastType.MESSAGE: 0,
 options?: ToastOptions 
 /* ToastOptions: position?: number; component?: React.ReactNode, duration?: number; */
 ```
@@ -25,4 +31,50 @@ showToast("Hello World")
 showToast("Task xyz has failed", 2, { duration: 500 })
 ```
 
-### Toast()
+### copyWithToast()
+Using this toast is especially recommended when interacing with a Users Clipboard.
+
+This function expects following paramaters,
+```ts
+text: string, // The text that should be copied
+toastMessage?: = "Copied to clipboard!" // What the toast displays
+```
+Example: 
+```ts 
+copyWithToast("Hello, World")
+const shiggy = "shiggy"
+copyWithToast(shiggy, `${shiggy} copied to clipboard`)
+```
+Once called the toast displays
+![Image of the returned toastMessage: "Hello, World"](https://raw.githubusercontent.com/Bluejutzu/plugins/main/images/copied.png)
+![Image of the returned toastMessage: "shiggy coped to clipboard"](https://raw.githubusercontent.com/Bluejutzu/plugins/main/images/shiggy%20copoed.png)
+
+:::tip 
+You can get a list of your copied texts with by,
+<Tabs>
+<TabItem label="Windows" icon="seti:windows">
+    ```ts
+     Windows-Key + v
+    ```
+    [Reference](https://support.microsoft.com/en-us/windows/clipboard-in-windows-c436501e-985d-1c8d-97ea-fe46ddf338c6)
+    </TabItem>
+    <TabItem label="GNOME (Gpaste)" icon="linux">
+        > Open it from the Applications menu or using quick keyboard shortcuts.
+    ```sh 
+    gpaste-client
+    ```
+    or 
+    ```sh
+    gpaste-client ui
+    ```
+    [Reference](https://www.baeldung.com/linux/clipboard-history-tools)
+    </TabItem>
+    <TabItem label="MacOS (Apple)" icon="apple">
+    1. Open the Finder at the top
+    2. Click edit in the Menu bar 
+    3. Select Show Clipboard
+
+    [Reference](https://macpaw.com/how-to/view-clipboard-history-mac)
+    </TabItem>
+</Tabs>
+:::
