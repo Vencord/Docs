@@ -55,15 +55,19 @@ export default defineConfig({
                     label: "Advanced Development",
                     items: [
                         {
+                            label: "Adv. Plugin Development",
+                            autogenerate: { directory: "advanced/plugins" }
+                        },
+                        {
                             label: "Utils",
-                            autogenerate: { directory: "utils" }
+                            autogenerate: { directory: "advanced/utils" }
                         }
                     ]
                 },
                 {
                     label: "Additional Information",
                     autogenerate: { directory: "additional" }
-                },
+                }
                 // {
                 //     label: "Troubleshooting",
                 //     autogenerate: { directory: "troubleshoot" }
