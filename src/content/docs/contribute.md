@@ -7,7 +7,7 @@ Vencord is a community project that welcomes any kind of contribution from **any
 Contributions can be made in different aspects of Vencord.
 
 ### Plugin Creation
-Vencord provides plugins to modify the Discord Client to your liking. If you want to create your own plugin head to [Plugin Development](http://localhost:4321/installing/)
+Vencord provides plugins to modify the Discord Client to your liking. If you want to create your own plugin head to [Plugin Development](/installing/)
 ### Feature and Plugin Requests
 
 If you are not that experienced in programming, but still have a good plugin/feature idea for Vencord
