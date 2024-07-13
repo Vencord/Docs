@@ -16,7 +16,7 @@ then you can create an [Issue](https://github.com/Vencord/plugin-requests/issues
 
 -   You will be blocked from opening further requests if you don't follow these rules:
     -   [Code of Conduct](/coc)
-    -   [Pre-Flight](http://localhost:4321/plugins/submission/#pre-flight)
+    -   [Pre-Flight](/plugins/submission/#pre-flight)
     -   **Blatant duplicates will result in a permanent non-appealable ban with no further warning**
 
 :::
