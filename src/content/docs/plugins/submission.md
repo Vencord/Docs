@@ -50,6 +50,6 @@ Now that you have everything ready, you can start making a pull request to Venco
 If you are new to Git, check [this Guide](https://opensource.com/article/19/7/create-pull-request-github). **That guide explains how to make pull requests!** 
 Make sure that your title mentions you're awaiting approval for a Plugin.
 
-After creating the PR your code will go through checks and needs to get approved before getting pushed into the `main` (or `dev`) build of Vencord. 
+After creating the PR your code will go through checks and needs to get approved before getting pushed into the dev build of Vencord. 
 
-However, if your PR get's denied don't worry. Vencords Maintainers give comments on approval/denial, so you can always fix any issues. Unless your plugin is in violation of rules.
+However, if your PR gets denied, don't worry. Vencords Maintainers give comments on approval/denial, so you can always fix any issues. Unless your plugin is in violation of rules.

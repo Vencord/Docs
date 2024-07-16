@@ -7,7 +7,7 @@ Vencord is a community project that welcomes any kind of contribution from **any
 Contributions can be made in different aspects of Vencord.
 
 ### Plugin Creation
-Vencord provides plugins to modify the Discord Client to your liking. If you want to create your own plugin head to [Plugin Development](http://localhost:4321/installing/)
+Vencord provides plugins to modify the Discord Client to your liking. If you want to create your own plugins, head to [Plugin Development](/installing/)
 ### Feature and Plugin Requests
 
 If you are not that experienced in programming, but still have a good plugin/feature idea for Vencord
@@ -16,7 +16,7 @@ then you can create an [Issue](https://github.com/Vencord/plugin-requests/issues
 
 -   You will be blocked from opening further requests if you don't follow these rules:
     -   [Code of Conduct](/coc)
-    -   [Pre-Flight](http://localhost:4321/plugins/submission/#pre-flight)
+    -   [Pre-Flight](/plugins/submission/#pre-flight)
     -   **Blatant duplicates will result in a permanent non-appealable ban with no further warning**
 
 :::
