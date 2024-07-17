@@ -16,3 +16,4 @@ Below you can find all the Links that are related to Vencord.
 -   **GitHub Organisation**: https://github.com/Vencord
 -   **Developer Documentation**: https://docs.vencord.dev/
 -   **Download** (Vencord): https://vencord.dev/download
+-   **Vencord Plugins**: https://vencord.dev/plugins

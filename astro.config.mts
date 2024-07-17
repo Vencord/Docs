@@ -10,7 +10,6 @@ export default defineConfig({
     integrations: [
         starlight({
             plugins: [starlightLinksValidator()],
-
             title: "Vencord Docs",
             logo: {
                 src: "./src/assets/favicon.png"
@@ -67,11 +66,11 @@ export default defineConfig({
                 {
                     label: "Additional Information",
                     autogenerate: { directory: "additional" }
+                },
+                {
+                    label: "Troubleshooting",
+                    autogenerate: { directory: "troubleshoot" }
                 }
-                // {
-                //     label: "Troubleshooting",
-                //     autogenerate: { directory: "troubleshoot" }
-                // }
             ]
         })
     ],
