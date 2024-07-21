@@ -11,6 +11,7 @@ export default defineConfig({
         starlight({
             plugins: [starlightLinksValidator()],
             title: "Vencord Docs",
+            disable404Route: true,
             logo: {
                 src: "./src/assets/favicon.png"
             },
