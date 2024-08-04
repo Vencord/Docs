@@ -1,0 +1,172 @@
+---
+title: "OptionType: Component"
+description: More in-depth guides for plugin creations
+---
+
+import { Aside, Tabs, TabItem, Code, Icon } from '@astrojs/starlight/components';
+
+:::caution
+Guides given within this directory are made for advanced Developers that have knowledge with Vencord and React. 
+:::
+:::caution[Notice]
+The guide will not show in-depth usage. It will only provide an example of how the OptionType is used.
+:::
+
+The OptionType.Component is very useful for plugin settings that need better customization or require deeper functionality to listen for events and more. 
+
+## Boilerplate
+You can define the OptionType like this,
+<Code title="myCoolPlugin/index.tsx" lang="ts" mark={["OptionType", "COMPONENT"]} code={
+`// ...
+
+import { definePluginSettings } from "@api/Settings";
+import definePlugin, { OptionType } from "@utils/types";
+
+const settings = definePluginSettings({
+    component: {
+        type: OptionType.COMPONENT,
+        description: "",
+        component: () => {}
+    }
+});
+
+// ...
+`
+}/>
+**The file name has to be .tsx to implement the React Component**
+
+Now to the `component`. You can either build a component directly in it or import it from another file. In this guide we will create the component in another file and import it later on.
+
+### Building the Component
+Create a `components` folder in your plugin folder: `myCoolPlugin/components/index.tsx`.
+
+Start by naming the component first. This should always relate to it's usage. For this guide we use `SettingsComponent`.
+<Code title="myCoolPlugin/components/index.tsx" lang="ts" code={
+`
+export function SettingsComponent() {}
+`
+}/>
+
+Now we create some JSX that can be returned.
+<Code title="components/index.tsx" lang="ts" code={
+`
+export function SettingsComponent() {
+    return (
+        <>
+            {/* JSX in here */}
+        </>
+    )
+}
+`
+} />
+
+For this tutorial we will create a simple button that shows a [Toast](/advanced/utils/toast) once clicking it.
+<Code title="components/index.tsx" lang="ts" mark={["Button"]} code={
+`
+import { Button } from "@webpack/common"
+
+export function SettingsComponent() {
+    return (
+        <>
+            <Button>Text</Button>
+        </>
+    )
+}
+`
+} />
+Now we add the `onClick()` attribute and `showToast`.
+<Code title="components/index.tsx" lang="ts" mark={["showToast"]} code={
+`
+import { Button, showToast } from "@webpack/common"
+
+export function SettingsComponent() {
+    return (
+        <>
+            <Button onClick={() => {
+            showToast("Clicked Button", 1) // 1 = ToastType.SUCCESS
+            }}>Text</Button>
+        </>
+    )
+}
+`
+} />
+
+The component is finished. Now we can import it in our index.tsx file in the root of our plugin.
+<Code title="myCoolPlugin/index.tsx" lang="ts" code={
+`
+// ...
+
+import { definePluginSettings } from "@api/Settings";
+import definePlugin, { OptionType } from "@utils/types";
+
+import { SettingsComponent } from "./components/index.tsx
+
+const settings = definePluginSettings({
+    component: {
+        type: OptionType.COMPONENT,
+        description: "",
+        component: () => {
+            return (<> <SettingsComponent /> </>);
+        }
+    }
+});
+
+// ...
+`
+} />
+
+Now build your code with `pnpm build` (or `pnpm watch`).
+If you use Vesktop or the Web version refer to [this](/installing#building-vencord) 
+
+### Conclusion
+Full Code:
+<Code title="myCoolPlugin/index.tsx" lang="ts" code={
+`
+/*
+ * Vencord, a Discord client mod
+ * Copyright (c) ${new Date().getFullYear()} Vendicated and contributors
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
+import { definePluginSettings } from "@api/Settings";
+import definePlugin, { OptionType } from "@utils/types";
+
+import { SettingsComponent } from "./components/index.tsx
+
+const settings = definePluginSettings({
+    component: {
+        type: OptionType.COMPONENT,
+        description: "",
+        component: () => {
+            return (<> <SettingsComponent /> </>);
+        }
+    }
+});
+
+export default definePlugin({
+    //...
+});
+`
+} />
+
+<Code title="components/index.tsx" lang="ts" mark={["showToast"]} code={
+`
+/*
+ * Vencord, a Discord client mod
+ * Copyright (c) ${new Date().getFullYear()} Vendicated and contributors
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
+import { Button, showToast } from "@webpack/common"
+
+export function SettingsComponent() {
+    return (
+        <>
+            <Button onClick={() => {
+            showToast("Clicked Button", 1); // 1 = ToastType.SUCCESS
+            }}>Text</Button>
+        </>
+    )
+};
+`
+} />

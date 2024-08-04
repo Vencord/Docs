@@ -10,8 +10,8 @@ export default defineConfig({
     integrations: [
         starlight({
             plugins: [starlightLinksValidator()],
-
             title: "Vencord Docs",
+            disable404Route: true,
             logo: {
                 src: "./src/assets/favicon.png"
             },
@@ -31,12 +31,46 @@ export default defineConfig({
                     link: "/intro"
                 },
                 {
-                    label: "Installation & Preparation",
-                    autogenerate: { directory: "installing" }
+                    label: "Contributing to Vencord",
+                    link: "/contribute"
+                },
+                {
+                    label: "Code of Conduct",
+                    link: "/coc"
                 },
                 {
                     label: "Plugin Development",
-                    autogenerate: { directory: "plugins" }
+                    items: [
+                        {
+                            label: "Installation & Preparation",
+                            autogenerate: { directory: "installing" }
+                        },
+                        {
+                            label: "Building the Plugin",
+                            autogenerate: { directory: "plugins" }
+                        }
+                    ]
+                },
+                {
+                    label: "Advanced Development",
+                    items: [
+                        {
+                            label: "Adv. Plugin Development",
+                            autogenerate: { directory: "advanced/plugins" }
+                        },
+                        {
+                            label: "Utils",
+                            autogenerate: { directory: "advanced/utils" }
+                        }
+                    ]
+                },
+                {
+                    label: "Additional Information",
+                    autogenerate: { directory: "additional" }
+                },
+                {
+                    label: "Troubleshooting",
+                    autogenerate: { directory: "troubleshoot" }
                 }
             ]
         })

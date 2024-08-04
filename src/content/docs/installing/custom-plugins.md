@@ -41,7 +41,7 @@ This folder won't exist yet, so you'll have to first create it. Navigate to the 
 
 Inside the `userplugins` folder, you can now add your plugin.
 
-Your plugin should be either a simple `myCoolPlugin.ts` or `myCoolPlugin.tsx` file, or a folder containing an `index.ts` or `index.ts` file.
+Your plugin should be either a simple `myCoolPlugin.ts` or `myCoolPlugin.tsx` file, or a folder containing an `index.ts` or `index.tsx` file.
 
 Place it inside the previously created userplugins folder.
 

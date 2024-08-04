@@ -1,0 +1,186 @@
+---
+const navLinks = {
+    installing: ["Download", "accentPurple"],
+    "additional/quick-links/": ["Links", "accentAqua"],
+};
+
+const page = Astro.url.pathname.split("/")[1];
+---
+
+<nav>
+    <div class="nav-content">
+        <div id="logo">
+            <a href="/" id="title">
+                <img src="/assets/logo-nav-oneko-padding.png" alt="Vencord Home" />
+                <div id="oneko" aria-hidden="true"></div>
+            </a>
+        </div>
+        <div id="btns" class="p-label-m">
+            <ul id="right">
+                {
+                    Object.entries(navLinks).map(([link, [display, color]]) => (
+                        <li>
+                            <a
+                                href={`/${link}`}
+                                style={`--accent:var(--${color})`}
+                                class:list={{ active: page === link }}
+                            >
+                                {display}
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<style>
+    :root {
+        --fontWeightBold: 700;
+        --fontWeightSemiBold: 600;
+        --fontWeightMedium: 500;
+        --fontWeightRegular: 400;
+    }
+    nav {
+        background-color: var(--bg0);
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        border-radius: 10px;
+    }
+
+    .nav-content {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 var(--horizontal-margin);
+    }
+
+    h4 {
+        margin: 0;
+    }
+
+    #btns {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    ul {
+        list-style-type: none;
+        overflow: hidden;
+        padding: 0;
+    }
+
+    #btnsleft {
+        flex: 1;
+    }
+
+    img {
+        vertical-align: middle;
+    }
+
+    li {
+        float: left;
+    }
+
+    a {
+        text-decoration: none;
+        text-align: center;
+        padding: 0.5em;
+        color: var(--fg0) !important;
+        transition: 0.15s ease;
+        transition-property: color, text-decoration;
+    }
+
+    .p-label-m {
+        font-size: 1em;
+        font-weight: var(--fontWeightSemiBold);
+        letter-spacing: 0.02rem;
+    }
+
+    .active {
+        color: var(--accent) !important;
+    }
+
+    a:not(#title):where(:hover, :focus) {
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        outline: none;
+        color: var(--accent);
+    }
+
+    #logo {
+        position: relative;
+    }
+
+    #oneko {
+        position: absolute;
+
+        top: -3px;
+        right: 7px;
+
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        image-rendering: pixelated;
+        /* https://raw.githubusercontent.com/adryd325/oneko.js/14bab15a755d0e35cd4ae19c931d96d306f99f42/oneko.gif */
+        background-image: url("/assets/oneko.gif");
+        animation: sleep 1s infinite;
+        cursor: pointer;
+    }
+
+    #oneko:hover {
+        animation: 2.5s 1 forwards wakeup;
+    }
+
+    @media (prefers-reduced-motion) {
+        #oneko {
+            display: none;
+        }
+    }
+
+    @media only screen and (max-width: 600px) {
+        .nav-content {
+            margin-top: 1em;
+            position: relative;
+            flex-direction: column;
+        }
+    }
+
+    @keyframes sleep {
+        0%,
+        50% {
+            background-position: -64px 0;
+        }
+        50.00001%,
+        100% {
+            background-position: -64px -32px;
+        }
+    }
+
+    @keyframes wakeup {
+        0%,
+        20% {
+            background-position: -160px 0;
+        }
+        20.00001%,
+        40% {
+            background-position: -192px 0;
+        }
+        40.00001%,
+        60% {
+            background-position: -224px 0;
+        }
+        60.00001%,
+        80% {
+            background-position: -96px -64px;
+        }
+        80.00001%,
+        100% {
+            background-position: -96px -96px;
+        }
+    }
+</style>
