@@ -15,9 +15,9 @@ Open your Vencord directory in VSCode and you should see a notification in the b
 If you don't see this notification, click the Extensions tab in the left side bar and there should be a Recommended section.
 
 Accept, and VSCode should install the following extensions:
-- EditorConfig: This configures a few formatting settings to match our code style
-- ESLint: This enforces consistent code style and catches common errors
-- StyleLint: Same as ESLint, but for CSS
-- Vencord Companion: Our homemade extension that adds useful features and code snippets for Vencord development
-- JSON2TS: Tool to convert JSON objects to typescript interfaces, very useful for auto-generating types for Discord objects
+- [EditorConfig](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig): This configures a few formatting settings to match our code style
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint): This enforces consistent code style and catches common errors
+- [StyleLint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint): Same as ESLint, but for CSS
+- [Vencord Companion](https://marketplace.visualstudio.com/items?itemName=Vendicated.vencord-companion): Our homemade extension that adds useful features and code snippets for Vencord development
+- [JSON2TS](https://marketplace.visualstudio.com/items?itemName=GregorBiswanger.json2ts): Tool to convert JSON objects to typescript interfaces, very useful for auto-generating types for Discord objects
 
