@@ -9,7 +9,7 @@ description: Vencords own cloud API for settings sync.
 Your instance has to be HTTPS capable due to [mixed content restrictions](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content) in web browsers.
 :::
 
-We provide a Docker build, so you don't need anything installed besides [Docker](https://docs.docker.com/compose/install/)!
+We provide a Docker build, so you don't need anything installed besides [Docker Compose](https://docs.docker.com/compose/install/)!
 
 ### Cloning the Repository
 
