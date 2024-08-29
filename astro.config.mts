@@ -53,16 +53,7 @@ export default defineConfig({
                 },
                 {
                     label: "Advanced Development",
-                    items: [
-                        {
-                            label: "Adv. Plugin Development",
-                            autogenerate: { directory: "advanced/plugins" }
-                        },
-                        {
-                            label: "Utils",
-                            autogenerate: { directory: "advanced/utils" }
-                        }
-                    ]
+                    autogenerate: { directory: "advanced" }
                 },
                 {
                     label: "Additional Information",
