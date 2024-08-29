@@ -68,10 +68,6 @@ export default defineConfig({
                     label: "Additional Information",
                     autogenerate: { directory: "additional" }
                 },
-                {
-                    label: "Troubleshooting",
-                    autogenerate: { directory: "troubleshoot" }
-                }
             ]
         })
     ],
