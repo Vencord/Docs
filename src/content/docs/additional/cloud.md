@@ -1,9 +1,7 @@
 ---
 title: Vencloud
-description: Vencords own API
+description: Vencords own cloud API for settings sync.
 ---
-
-Vencloud is Vencord's API for cloud settings sync!
 
 ## Self Hosting
 
@@ -11,7 +9,7 @@ Vencloud is Vencord's API for cloud settings sync!
 Your instance has to be HTTPS capable due to [mixed content restrictions](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content) in web browsers.
 :::
 
-We provide a Docker build, so you don't need anything installed besides Docker!
+We provide a Docker build, so you don't need anything installed besides [Docker](https://docs.docker.com/compose/install/)!
 
 ### Cloning the Repository
 
@@ -23,7 +21,7 @@ git clone https://github.com/Vencord/Vencloud
 
 ### Setting up the Config
 
-Copy the example configuration (`.env.example`) to `.env`. Now open it with your text editor of trust and fill in the configuration values.
+Copy the example configuration (`.env.example`) to `.env`. Now open it with your text editor of choice and fill in the configuration values.
 All variables are documented there!
 
 ### Running
