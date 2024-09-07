@@ -1,95 +1,115 @@
 ---
-title: Plugin Submission
-description: How to submit your plugin to the official Vencord repository
+title: Plugin Submission & Updates
+description: Vencord Plugin submission and updates guide
 ---
 
-### How to submit your pre-made plugin to the official Vencord repository
+This guide describes steps on how to release a new plugin to Vencord and to make changes to the already existing plugin. 
 
-If you have already developed a plugin and want to include it as a built-in plugin in Vencord, follow this guide to submit your plugin for consideration.
+## Initial Plugin Submission 
 
-## Prerequisites
+### Pre-submission Checklist 
 
-Before submitting your plugin, ensure that:
-- Your plugin is fully developed, tested, and follows the [Creating Plugins guide](/plugins/creating).
-- You have a GitHub account and are familiar with basic Git commands.
-- Your plugin adheres to Vencord's code quality, structure, and naming conventions (e.g., camelCase for plugin folder names).
+- The folder in which stores your plugins should have camelCase name (for instance, `myAwesomePlugin`). 
+- `README.md` is in your plugin folder with a description, usage instructions, screenshots(if any) 
+- The coding of your plugin adheres to Vencord’s coding standards 
+- This is the best because probably, you have engaged in rigorous testing of the plugin. 
 
-## Submission Process
+### Submission Steps 
 
-The process involves forking the Vencord repository, adding your plugin, and creating a pull request for review by the maintainers.
+1. **Fork the Repository**: Go to the specific repository on [https://github.com/Vendicated/Vencord](https://github.com/Vendicated/Vencord) page and select “Fork”. 
 
-### Step 1: Fork the Vencord Repository
+2. **Clone Your Fork** 
+```bash 
+git clone https://github.com/YOUR_USERNAME/Vencord.git 
+cd Vencord 
+``` 
 
-1. Go to the official [Vencord GitHub repository](https://github.com/Vendicated/Vencord).
-2. Click the **Fork** button in the top-right corner to create a copy of the repository under your GitHub account.
-3. Clone the forked repository to your local machine:
-   ```bash
-   git clone https://github.com/YourUsername/Vencord
-   cd Vencord
-   ```
+3. **Add Your Plugin** 
+- Make sure that your plugin folder has the correct name (for example ‘myAwesomePlugin’) 
+- Next, make a copy of your plugin folder and place it in the `Vencord/src/plugins/` directory. 
 
-### Step 2: Add Your Plugin
+4. **Create a Branch** 
+```bash 
+git checkout -b add-plugin/yourPluginName 
+``` 
 
-1. Navigate to the `src/plugins` folder in your cloned repository:
-   ```bash
-   cd src/plugins
-   ```
-2. Create a new folder for your plugin using camelCase (e.g., `myFirstPlugin`):
-   ```bash
-   mkdir myFirstPlugin
-   ```
-3. Ensure your `README.md` file is added and includes:
-   - A brief description of your plugin.
-   - Screenshots, GIFs, or videos if applicable to showcase your plugin.
+5. **Commit Your Plugin** 
+```bash 
+git add src/plugins/yourPluginName 
+git commit -m "feat(Plugin): YourPluginName. 
+``` 
+Note: Replace ‘YourPluginName’ with your own actual plugin name 
 
-> Since this is for a built-in plugin, no installation instructions are required.
+6. **Push to Your Fork** 
+```bash 
+git push –u origin add-plugin/YourPluginName 
+``` 
 
-### Step 3: Commit Your Changes
+7. **Open a Pull Request** 
+- Navigate to the fork that you created earlier on Github 
+- Click "Pull request" 
+- Set base repository to `Vendicated/Vencord` and base branch to `dev` 
+- Title your PR "feat(Plugin): YourPluginName
+- In the plugin description, the author should give a clear explanation of what the plugin does. 
 
-1. Add your changes to git:
-   ```bash
-   git add src/plugins/myFirstPlugin
-   ```
-2. Commit your changes with a descriptive message:
-   ```bash
-   git commit -m "Add myFirstPlugin"
-   ```
-3. Push the changes to your forked repository:
-   ```bash
-   git push origin main
-   ```
+### Review Process 
 
-### Step 4: Create a Pull Request
+- The Vencord maintainers will simply go through your submission. 
+- Reply to any feedback as soon as possible or to changes that were requested 
+- It needs to be understood that changes might be made, thus preparing for such changes needs to be in place. 
 
-1. Go to your GitHub fork of the Vencord repository.
-2. Click on the **Pull Requests** tab and then click **New Pull Request**.
-3. Ensure the base repository is `Vendicated/Vencord` and the base branch is `dev`. If you select `main`, maintainers will switch it to `dev` anyway.
-4. Provide a detailed description of your plugin, outlining what it does and any important information for maintainers.
+### Common Pitfalls 
 
-### Step 5: Review Process
+- Please make sure that the folder name of the plugin is the same as the one used in the commit message and the PR title 
+- Ensure that you have only committed files only found within your plugin’s directory. 
+- Make sure that your plugin does not clash with something that is already implemented in Vencord
 
-After submitting the pull request, the Vencord maintainers will review your plugin. During this process:
-- You may receive feedback or requests for changes. Be responsive and adjust your plugin as needed.
-- The review ensures your plugin meets Vencord's standards for quality, security, and performance.
+## Updating Your Plugin 
 
-Once the review is complete, your plugin will be merged into the `dev` branch and included in future Vencord releases.
+Another important action is that after the plugin has been merged you may require adjustments or correction works. Here's how to do that
 
-## License and Credits
+1. **Sync Your Fork** 
+Ensure your fork is up-to-date with the main Vencord repository: 
+```bash 
+git checkout dev 
+git fetch upstream 
+git merge upstream/dev 
+git push origin dev 
+``` 
 
-All plugins submitted to Vencord must include a license header. When you commit your plugin, a license header will automatically be added to the top of your `index.ts` file:
+2. **Opening a New Branch for your Update** 
+```bash 
+git checkout -b update-plugin/yourPluginName-description 
+``` 
+Instead of “description”, you should write a short tag of the change (for example, “fix-nitro-loading”). 
 
-```ts
-/*
- * Vencord, a Discord client mod
- * Copyright (c) ${new Date().getFullYear()} Vendicated and contributors*
- * SPDX-License-Identifier: GPL-3.0-or-later
- */
-```
+3. **Make Your Changes** 
+Modify your plugin files in the directory src/plugins/yourPluginName/ 
 
-If you prefer, you may change the `Vendicated and contributors` portion to your own name, but this is not strictly required as you will be included in the "contributors" group automatically.
+4. **Commit Your Changes** 
+```bash 
+git add src/plugins/yourPluginName 
+git commit -m "YourPluginName: fix Nitro users can not access the plugin 
+``` 
+Associated with the commit change, a brief and informative message should be written by the author. 
 
----
+5. **Push Your Changes** 
+```bash 
+git push -u origin update-plugin/yourPluginName-description 
+``` 
 
-By following this guide, you can submit your plugin for official inclusion in Vencord. Make sure your plugin is thoroughly tested and well-documented to streamline the review process and ensure its acceptance.
+6. **Open a New Pull Request** 
+- Go to the fork that you created on GitHub
+- Click "Pull request" 
+- For base repository select `Vendicated/Vencord` and for base branch select `dev` 
+- Make sure that you title your PR in such a way that it would match the commit message that you want to be merged. 
+- It is then useful to offers more information about these modifications and why they are vital. 
 
-For further assistance, feel free to ask for help in the [Vencord community channels](https://vencord.dev/discord).
+## Best Practices for Updates 
+
+- Keep changes focused: In order to point out a certain issue or improvement each of the PRs should address one. 
+- Test thoroughly: When implementing changes, be careful that you do not develop other problems. 
+- Update documentation: If your changes are related to usage, this should be reflected on your plugin’s README.md 
+- Try to stick to the current style guide that is used in the project and to the current practices that are adopted in the project. 
+
+For assistance, join the [Vencord Discord](https://vencord.dev/discord). 
