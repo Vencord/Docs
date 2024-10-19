@@ -3,7 +3,7 @@ title: Plugin Submission
 description: How to submit your plugin to the official Vencord repository
 ---
 
-## Pre-Flight
+## Prerequisites
 
 - Latest [Dev Build of Vencord](https://github.com/Vendicated/Vencord)
 - Check your code again. Does it meet the rules for a plugin?

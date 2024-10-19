@@ -11,7 +11,7 @@ Below you can find all the Links that are related to Vencord.
 -   **Homepage**: https://vencord.dev/
 -   **FaQ**: https://vencord.dev/faq
 -   **Permament Server Invite**: https://discord.gg/D9uwnFnqmd
--   **Donate/Sponsor** (gives some perks like badges): https://github.com/sponsors/Vendicated
+-   **Donate/Sponsor** (*includes perks!*): https://github.com/sponsors/Vendicated
 -   **Source Code**: https://vencord.dev/source
 -   **GitHub Organisation**: https://github.com/Vencord
 -   **Developer Documentation**: https://docs.vencord.dev/

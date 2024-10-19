@@ -1,7 +1,7 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import starlightLinksValidator from "starlight-links-validator";
-import { rehypeHeadingIds } from "@astrojs/markdown-remark";
+import { rehypeHeadingIds } from "@astrojs/markdown-remark"
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 // https://astro.build/config
@@ -52,13 +52,9 @@ export default defineConfig({
                     ]
                 },
                 {
-                    label: "Advanced Development",
-                    autogenerate: { directory: "advanced" }
-                },
-                {
                     label: "Additional Information",
                     autogenerate: { directory: "additional" }
-                },
+                }
             ]
         })
     ],
