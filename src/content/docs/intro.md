@@ -12,4 +12,4 @@ This documentation will cover topics like:
 - How to setup your development environment
 - The plugin structure and all the available plugin APIs
 - How to reverse engineer and understand Discord code to find which functions you need to use or patch
-- And much more! 
+- And much more!
