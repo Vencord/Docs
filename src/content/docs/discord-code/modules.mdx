@@ -1,0 +1,150 @@
+---
+title: Webpack Modules & Chunks
+description: An overview of how Discord's code is organized into Webpack modules and chunks.
+---
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+Discord uses Webpack (actually [rspack](https://rspack.rs/)) to bundle its code into modules and chunks.
+
+Modules are individual files, while a chunk is a collection of modules that are loaded together.
+
+Webpack emulates a system quite similar to NodeJS' CommonJS system, where each module has its own scope and can export and import functionality using `module.exports` and `require`.
+Instead of filenames, it uses numeric IDs. Each module has a unique ID which can be used to require it.
+
+## Chunks
+
+Each `.js` source file loaded by Discord (e.g. https://discord.com/assets/876d6c58026ec79c.js) is a chunk.
+
+It looks like this:
+
+```js
+"use strict";
+(this.webpackChunkdiscord_app = this.webpackChunkdiscord_app || []).push([
+    ["808979"],
+    {
+        532446(i, n, r) {
+            r.d(n, {
+                M: () => c
+            });
+            var a = r(477900);
+            r(582128);
+            var t = r(331322);
+            function c(i) {
+                let { children: n } = i;
+                return (0, a.jsx)(t.B, {
+                    direction: "horizontal",
+                    gap: 8,
+                    align: "end",
+                    children: n
+                });
+            }
+        }
+    }
+]);
+```
+
+It pushes to the global `webpackChunkdiscord_app` array, which is webpack's module loading system.
+
+Each chunk contains one or more modules in the form:
+
+```js
+moduleId(module, exports, require) {
+    require.defineExports(exports, {
+        exportName: () => value
+    });
+
+    const importedModule = require(otherModuleId);
+}
+```
+
+Specifically, this chunk pushes one single module with the ID `532446`.
+
+A bigger chunk could contain dozens or even hundreds of modules.
+
+## Modules
+
+Let's look at the same module from above again.
+
+Switch between the different representations to understand how the minified code corresponds to the de-minified version and the potential source file.
+
+**Main things of note:**
+
+- Each module has this exact same structure:
+    - A function taking three variables, module, exports, and require.
+    - Exports are defined at the top. Export names are usually one or two letter names.
+    - Next come imports. These use the require function to load other modules by their numeric IDs.
+    - Finally, the module's actual code is executed.
+- This specific module
+    - exports a React component as `M`. You could access this component via `require(532446).M`
+    - imports three other modules:
+        1. `477900`: React JSX runtime
+        2. `582128`: React itself. Only imported for side effects and not directly used in the module.
+        3. `331322`: Module containing the `B` component that is used in the exported React component.
+- You might find this syntax odd: `(0, a.jsx)(...)`. It's essentially the same as `a.jsx(...)` with a minor difference that doesn't matter for us.
+- `jsx(Component, props)` and `jsxs(Component, props)` are what `<Component {...props} />` is compiled to.
+
+<Tabs>
+    <TabItem label="Minified">
+        ```js
+        532446(i, n, r) {
+            r.d(n, {
+                M: () => c
+            });
+            var a = r(477900);
+            r(582128);
+            var t = r(331322);
+            function c(i) {
+                let { children: n } = i;
+                return (0, a.jsx)(t.B, {
+                    direction: "horizontal",
+                    gap: 8,
+                    align: "end",
+                    children: n
+                });
+            }
+        }
+        ```
+    </TabItem>
+
+    <TabItem label="De-minified">
+        ```js
+        532446(module, exports, require) {
+            require.defineExports(exports, {
+                M: () => Component
+            });
+
+            var React = require(477900);
+            require(582128);
+            var ModuleWithComponent = require(331322);
+
+            function Component(props) {
+                let { children } = props;
+
+                return React.createElement(ModuleWithComponent.B, {
+                    direction: "horizontal",
+                    gap: 8,
+                    align: "end",
+                    children: n
+                });
+            }
+        }
+        ```
+    </TabItem>
+
+    <TabItem label="Potential Source File">
+        ```jsx
+        // File: HorizontalEndAlignedFlex.jsx
+        import { Flex } from "@components/Flex";
+
+        export function HorizontalEndAlignedFlex({ children }) {
+            return (
+                <Flex direction="horizontal" gap={8} align="end">
+                    {children}
+                </Flex>;
+            );
+        }
+        ```
+    </TabItem>
+
+</Tabs>

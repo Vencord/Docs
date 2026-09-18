@@ -34,6 +34,10 @@ export default defineConfig({
                 {
                     label: "Plugin Development",
                     items: [{ autogenerate: { directory: "plugins" } }]
+                },
+                {
+                    label: "Navigating Discord's Code",
+                    items: [{ autogenerate: { directory: "discord-code" } }]
                 }
             ]
         })
