@@ -1,0 +1,147 @@
+---
+title: Native NodeJS Code
+description: How to run code in NodeJS
+---
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+Plugins run in the browser sandbox by default. This means they only have access to web APIs as if they were running in a regular web browser.
+
+Sometimes plugins may need access to the NodeJS environment. Some examples include
+
+- Bypassing Content Security Policy (CSP) or Cross-Origin Resource Sharing (CORS) restrictions
+- Interfacing with other programs
+- Reading specific files from the filesystem
+
+However, this **should only be used as a last resort** if no other alternatives are available! For example, the following are not valid use cases:
+
+- Storing data — Instead, use Vencord Settings or IndexedDB (via DataStore API)
+- Reading or writing arbitrary files — This poses severe security risks. Use web file picker/saving instead
+
+## Defining Native Plugin Code
+
+Plugin Natives are defined via the `native.ts` file in your plugin folder. This file will be ran in the NodeJS environment. This file can export functions to make them available via IPC.
+
+Any function exported from here
+
+- will be callable via VencordNative as demonstrated below
+- will always return a Promise
+- will receive the invoke event as first argument. You do not pass this event from the browser code.
+
+<Tabs>
+    <TabItem label="native.ts" icon="seti:windows">
+    ```ts
+    export function add(event: IpcMainInvokeEvent, x: number, y: number) {
+        return x + y;
+    }
+    ```
+    </TabItem>
+    <TabItem label="index.ts(x)" icon="seti:react">
+    ```js
+    import definePlugin, { PluginNative } from "@utils/types";
+
+    const Native = VencordNative.pluginHelpers.MyPluginName as PluginNative<typeof import("./native")>;
+
+    export default definePlugin({
+        name: "MyPluginName",
+        async start() {
+            console.log(await Native.add(1, 2)); // logs 3
+        }
+    })
+    ```
+    </TabItem>
+
+</Tabs>
+
+:::danger
+You should consider the browser process untrusted. Any data passed as arguments must be carefully validated and sanitized.
+
+Do not export overly broad APIs. Only export minimal, necessary functions.
+For example, if you need to read one specific file on the host, hardcode that specific file path **inside your native code** rather than accepting it as an argument from the browser.
+
+If you are accepting an argument and including it in a file path or a shell command, you must carefully validate and sanitize it to prevent security vulnerabilities like path traversal or command injection.
+:::
+
+:::caution
+After making changes to the native.ts file, you will need to fully close and restart Discord for the changes to take effect.
+
+DO NOT import the `native.ts` file directly into your browser code, as this will cause errors! You can only access it via VencordNative global!
+
+Any value you pass as argument and return value must be [serializable via the structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types).
+:::
+
+## Bypassing Content Security Policy (CSP) and Cross-Origin Resource Sharing (CORS)
+
+[CSP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP) and [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) are web security mechanisms that restrict which resources can be loaded and from which websites.
+
+They are pretty similar with one key difference:
+
+- **CSP** is set by the current website and enforced by the Browser. Discord tells the Browser "only allow resources from discord.com, tenor.com, ...". Then if code tries to load `example.com`, the browser blocks it
+- **CORS** is set by the server hosting the resource and enforced by the Browser. The server at `example.com` says "only allow example.com to access my resources". Then the browser blocks discord.com from requesting it.
+
+In other words, CSP is controlled by us, while CORS is controlled by the server hosting the resource.
+
+### CSP
+
+To bypass CSP, just add the target server to the CspPolicies in your native.ts file:
+
+<Tabs>
+    <TabItem label="native.ts" icon="seti:windows">
+    ```ts
+    import { ConnectSrc, CspPolicies } from "@main/csp";
+
+    CspPolicies["example.com"] = ConnectSrc; // or MediaSrc, etc
+    ```
+    </TabItem>
+    <TabItem label="index.ts(x)" icon="seti:react">
+    ```ts
+    const res = await fetch("https://example.com/endpoint"); // now allowed
+    ```
+    </TabItem>
+
+</Tabs>
+
+### CORS
+
+CORS however cannot be modified by us, as the Server controls it. Instead, you must send the request from your native code, as NodeJS does not enforce CORS:
+
+<Tabs>
+    <TabItem label="native.ts" icon="seti:windows">
+    ```ts
+    const API_HOST = "https://example.com";
+
+    export async function fetchCoolAPI(_event, endpoint: string) {
+        // endpoint argument is untrusted! Validate it before using it.
+        const url = new URL(endpoint, API_HOST);
+        if (url.origin !== API_HOST) {
+            throw new Error("Invalid endpoint");
+        }
+
+        const res = await fetch(url.toString());
+        return await res.json();
+    }
+    ```
+    </TabItem>
+
+    <TabItem label="index.ts(x)" icon="seti:react">
+    ```ts
+    import definePlugin, { PluginNative } from "@utils/types";
+
+    const Native = VencordNative.pluginHelpers.MyPluginName as PluginNative<typeof import("./native")>;
+
+    export default definePlugin({
+        name: "MyPluginName",
+        async start() {
+            console.log(await Native.fetchCoolAPI("/some-endpoint")); // logs the JSON response from https://example.com/some-endpoint
+        }
+    })
+    ```
+    </TabItem>
+
+</Tabs>
+
+:::danger
+Don't export an overly broad fetch API from your native code as this completely undermines the security model and can expose sensitive data. Always restrict it to specific endpoints or domains.
+
+In the above example, the fetch API is restricted to the `https://example.com` domain, ensuring that only requests to this specific server are allowed.
+:::

@@ -1,10 +1,10 @@
 ---
-title: Creating Plugins
+title: Basic Plugin
 description: How to create plugins for Vencord
 ---
 
-import { Aside, Tabs, TabItem, Code } from '@astrojs/starlight/components';
-import RequiredStar from "@vencord-docs/components/RequiredStar.astro"
+import { Aside, Tabs, TabItem, Code } from "@astrojs/starlight/components";
+import RequiredStar from "@vencord-docs/components/RequiredStar.astro";
 
 ## Prerequisites
 
@@ -37,9 +37,10 @@ First, decide whether you want to use the `src/plugins` or `src/userplugins` fol
 
         Use this location if you don't intend to submit your plugin for inclusion in Vencord.
     </TabItem>
+
 </Tabs>
 
-___
+---
 
 Once you have decided, create a folder with the name of your plugin inside the chosen directory.
 
@@ -54,7 +55,7 @@ There are 3 special files you can create here:
         Your plugin's entry point. This is where most of your plugin's code will live and where you define things
         like its name and description.
 
-        Code in this file runs in the browser, so you can use all browser APIs here.  
+        Code in this file runs in the browser, so you can use all browser APIs here.
         Node.js APIs like `fs` or `child_process` are not available here.
         If you need them, you can do so in the `native.ts` file.
     </TabItem>
@@ -71,6 +72,7 @@ There are 3 special files you can create here:
 
         Browser APIs are not available here. If you need them, you can do so in the `index.ts` file.
     </TabItem>
+
 </Tabs>
 
 ### Plugin Boilerplate
@@ -93,7 +95,7 @@ import definePlugin from "@utils/types";
 export default definePlugin({
     name: "name",
     description: "description",
-    authors: [Devs.author],
+    authors: [Devs.author]
 });
 ```
 
@@ -103,7 +105,7 @@ Fill out the `name` and `description` fields in the `definePlugin` call.
 export default definePlugin({
     name: "MyCoolPlugin",
     description: "I am very cute!",
-    authors: [Devs.author],
+    authors: [Devs.author]
 });
 ```
 
@@ -134,17 +136,19 @@ For the authors property, how you do this will depend on whether you're making a
     </TabItem>
 </Tabs>
 
-___
+---
 
 Save your file and it should automatically format it and insert the following license header on the top.
 
-<Code lang="ts" mark={["Vendicated and contributors"]} code={
-`/*
+<Code
+    lang="ts"
+    mark={["Vendicated and contributors"]}
+    code={`/*
  * Vencord, a Discord client mod
  * Copyright (c) ${new Date().getFullYear()} Vendicated and contributors*
  * SPDX-License-Identifier: GPL-3.0-or-later
- */`
-}/>
+ */`}
+/>
 
 If you want, you can change it from `Vendicated and contributors` to your own name.
 But this is not strictly necessary, you own the code either way (and are already included in the "contributors" part).
