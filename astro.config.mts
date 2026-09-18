@@ -1,8 +1,6 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import starlightLinksValidator from "starlight-links-validator";
-import { rehypeHeadingIds } from "@astrojs/markdown-remark";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 // https://astro.build/config
 export default defineConfig({
@@ -10,7 +8,6 @@ export default defineConfig({
     integrations: [
         starlight({
             plugins: [starlightLinksValidator()],
-
             title: "Vencord Docs",
             logo: {
                 src: "./src/assets/favicon.png"
@@ -19,10 +16,10 @@ export default defineConfig({
             editLink: {
                 baseUrl: "https://github.com/Vencord/Docs/tree/main/"
             },
-            social: {
-                github: "https://github.com/Vencord",
-                discord: "https://vencord.dev/discord"
-            },
+            social: [
+                { icon: "github", href: "https://github.com/Vencord", label: "GitHub" },
+                { icon: "discord", href: "https://vencord.dev/discord", label: "Discord" }
+            ],
             customCss: ["./src/style/custom.css", "./src/style/headingLinks.css"],
             lastUpdated: true,
             sidebar: [
@@ -32,25 +29,13 @@ export default defineConfig({
                 },
                 {
                     label: "Installation & Preparation",
-                    autogenerate: { directory: "installing" }
+                    items: [{ autogenerate: { directory: "installing" } }]
                 },
                 {
                     label: "Plugin Development",
-                    autogenerate: { directory: "plugins" }
+                    items: [{ autogenerate: { directory: "plugins" } }]
                 }
             ]
         })
-    ],
-
-    markdown: {
-        rehypePlugins: [
-            rehypeHeadingIds,
-            [
-                rehypeAutolinkHeadings,
-                {
-                    behavior: "wrap"
-                }
-            ]
-        ]
-    }
+    ]
 });
