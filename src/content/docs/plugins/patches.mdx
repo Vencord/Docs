@@ -1,0 +1,186 @@
+---
+title: Patches
+description: Patch Discord's code to modify its behavior
+sidebar:
+    order: 3
+---
+
+:::note
+You may not need a patch. Vencord offers many [built-in APIs](../common) for modifying Discord's behavior without needing to write a patch.
+:::
+
+Patches are [RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) replacements applied to Discord's JavaScript code at runtime. They allow you to rewrite Discord's code in any way you want.
+For example, you can remove undesired code or checks, insert your own code, replace code with alternative implementations, etc.
+
+If you don't know RegExp, you should first learn it before attempting to write patches.
+
+---
+
+Before writing a patch, you must understand [how modules work](/discord-code/modules).
+
+Writing a patch is a three step process:
+
+1. Find the part of Discord's code you want to modify. See [Finding Code](/discord-code/find-code).
+2. Come up with the patch [**`find`**](#the-find) — a unique string contained in the module you want to patch
+3. Write a RegExp [**match**](#the-match) and [**replace**](#the-replace)
+
+:::caution
+DevTools will pretty-print code and add extra whitespace. However, Discord's code is minified and will **never** contain unnecessary whitespace.
+When writing a find or match, do not include whitespace.
+:::
+
+## The `find`
+
+I will assume that you found the module you want to patch.
+
+The next step is to identify a unique sequence of code that is contained **only** in the module you want to patch. Avoid using minified variable names, as they may change between Discord updates.
+
+The best suited anchors for finds are
+
+- Intl strings like `S.intl.formatToPlainString(S.t["a9+V+V"]` — The ID `a9+V+V"` is stable and can be used. `S` is unstable and should not be used
+- Function/Method names — Non mangled names are a great choice
+- Unique strings — Any string that is unlikely to appear elsewhere in Discord's code
+
+Combine that with surrounding code like `:`, `(`, `{`, etc., to make it more unique and less likely to appear elsewhere in Discord's code.
+
+Some example finds from existing plugins:
+
+- `}renderStickersAccessories(` — A method defined inside our module
+- `.CREATE_FORUM_POST||` — A non-mangled property in our Module
+- `#{intl::PREMIUM_MESSAGE_LENGTH_UPSELL_TOOLTIP}` — An Intl message by non-hashed name. See [Intl Keys](#intl-keys) for more details.
+- `#{intl::a9+V+V::raw}` — An Intl message by hashed name. See [Intl Keys](#intl-keys) for more details.
+  (
+  Once you picked a find, use global source search `CTRL + SHIFT + F`) to search for this find and ensure it's only found in exactly one module.
+
+## The `match`
+
+This is a RegExp which will operate on the module found by your `find`. Supports the following custom syntax:
+
+- `#{intl::KEY}` for non-hashed keys, see [Intl Keys](#intl-keys)
+- `#{intl::HASH::raw}` for hashed keys
+- `\i` to match minified javascript identifiers (names of variables, functions, etc)
+
+For example, to match
+
+```js
+t.type !== g.lp.ACTIVITY && _.A.selectParticipant(c, t.id);
+```
+
+you could use the following `match`:
+
+```js
+\i\.type!==\i\.\i\.ACTIVITY&&\i\.\i\.selectParticipant\(\i,\i\.id\)
+```
+
+If you want to refer to minified variables in your replacement, capture them using [capturing groups](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Ranges).
+
+For example, to capture the participant ID (`t.id`), you could use the following `match` — note the extra parentheses around it:
+
+```js
+\i\.type!==\i\.\i\.ACTIVITY&&\i\.\i\.selectParticipant\(\i,(\i\.id)\)
+```
+
+## The `replace`
+
+This is the replacement string. Any code captured in the `match` **will be replaced** with this value.
+
+You can use many special identifiers here:
+
+- `$&` to refer to the entire RegExp match
+- `$1`, `$2`, etc. to refer to captured groups in the `match`
+- `$$` to refer to a literal `$` character
+- `$self` to insert your plugin instance. This allows you to call methods defined on your plugin.
+
+## Using plugin methods inside patches
+
+Replacement strings should be as short as possible. Writing code in them is very prone to errors since it's not validated by your Editor.
+
+Instead, define a method on your plugin and call it from the replacement string using `$self.methodName()`.
+
+### Example
+
+You can call methods and render components from your plugin within the replacement strings.
+
+Components must always be wrapped in an error boundary to prevent crashes. If there is any chance that a method might throw an error, it should use a `try...catch` block to handle errors gracefully.
+This is always the case if you use Webpack modules, as they could break or change shape.
+
+```jsx
+definePlugin({
+    // ...
+
+    patches: [
+        {
+            find: "...",
+            replacement: [
+                {
+                    match: /.../,
+                    replace: "$self.doThing($1)"
+                },
+                {
+                    match: /.../,
+                    replace: "$self.renderComponent({ text: $1 })"
+                }
+            ]
+        }
+    ],
+
+    doThing(arg) {
+        try {
+            console.log(arg);
+        } catch (e) {
+            logger.error(e);
+        }
+    },
+
+    renderComponent: ErrorBoundary.wrap(props => <div>{props.text}</div>)
+});
+```
+
+## Patch Safety
+
+It is always better for your patch to break after a change than to match the wrong code and potentially cause crashes.
+
+To achieve this, make sure that your patch is specific. Always try to anchor it on a non-mangled identifier to avoid unintended replacements. Use wildcards sparingly to minimize the risk of accidental matches.
+
+### Unsafe example
+
+This is an unsafe match because it is a very generic match. This could easily match unintended code and cause issues.
+
+```regexp
+ref:(\i),style:\i
+```
+
+### Safe example
+
+This still matches the same code, but we now anchor it to a specific context via a [lookahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Regular_expressions/Lookahead_assertion) for the relevant Intl key.
+The match is only accepted if the specified Intl key appears within the next 250 characters.
+
+```js
+ref:(\i),style:\i(?=.{0,250}#{intl::USER_PROFILE_ACCOUNT_POPOUT_BUTTON_A11Y_LABEL})
+```
+
+## Patch Performance
+
+Some Discord modules are **huge**, and an inefficient Regular Expression can significantly impact performance. Debug builds of Vencord will log how long your patch took to the console.
+
+TODO - add guide
+
+## Intl Keys
+
+User facing messages are stored as Intl messages. Each such message has a unique identifier:
+
+- In Discord's source code, these identifiers have human-readable names like `PREMIUM_MESSAGE_LENGTH_UPSELL_TOOLTIP`.
+- In the minified code we are working with, these identifiers are instead replaced with hashed names like `a9+V+V`. These names are stable so you can use them in finds and matches.
+  You can search for these keys via global source search (`CTRL + SHIFT + F`) to see what message they correspond to.
+
+We have a huge list of mappings which you can use to find human-readable names for a hash. You can download it from https://sadan.zip/assets/key-mappings.json.
+
+If there is no mapping for your hash, you can try to guess it based on the context if you want, but this is completely optional.
+You can hash an identifier using `Vencord.Util.runtimeHashMessageKey("KEYBIND_IN_BROSWER_NOTICE")` in the DevTools console.
+
+Intl messages are referenced in finds or matches using special syntax:
+
+- `#{intl::KEY}` for non-hashed keys
+- `#{intl::HASH::raw}` for hashed keys
+
+You can combine these with surrounding code, e.g. `#{intl::GUILD_OWNER}),children:`

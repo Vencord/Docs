@@ -1,6 +1,8 @@
 ---
 title: Plugin API
 description: Common patterns
+sidebar:
+    order: 2
 ---
 
 import { Tabs, TabItem } from "@astrojs/starlight/components";
@@ -89,11 +91,11 @@ Each context menu type (message, user, channel, etc.) has its own ID. The exampl
         - Use Inspect Elements to reveal it in the Elements tab
         - Look for its ID in the html
 
-        ![](../../../assets/screenshots/context-id.png)
+        ![](../../../assets/screenshots/plugin-api/context-id.png)
     </TabItem>
 
     <TabItem label="Screenshot" icon="seti:image">
-            ![](../../../assets/screenshots/context.png)
+            ![](../../../assets/screenshots/plugin-api/context.png)
     </TabItem>
 
 </Tabs>
@@ -102,7 +104,7 @@ Each context menu type (message, user, channel, etc.) has its own ID. The exampl
 
 Add custom buttons in the chat bar (where Gift, Gif, Sticker and Emoji buttons are)
 
-![](../../../assets/screenshots/chat-button.png)
+![](../../../assets/screenshots/plugin-api/chat-button.png)
 
 You define it via the `chatBarButton` property on your plugin object. The icon is used for `Settings > Vencord > Plugins > Manage Plugin UI Elements`.
 
@@ -130,7 +132,7 @@ Run code whenever the current user
 
 The message popover is the little bar that appears in the top-right corner of a message when you hover over it.
 
-![](../../../assets/screenshots/popover.png)
+![](../../../assets/screenshots/plugin-api/popover.png)
 
 You define it via the `chatBarButton` property on your plugin object. The icon is used for `Settings > Vencord > Plugins > Manage Plugin UI Elements`.
 
@@ -172,14 +174,14 @@ Define the `renderMessageAccessory` method on your plugin object to make use of 
     </TabItem>
 
     <TabItem label="Screenshot" icon="seti:image">
-            ![](../../../assets/screenshots/accessory.png)
+            ![](../../../assets/screenshots/plugin-api/accessory.png)
     </TabItem>
 
 </Tabs>
 
 ## Message Decorations
 
-![](../../../assets/screenshots/msg-decor.png)
+![](../../../assets/screenshots/plugin-api/msg-decor.png)
 
 Message Decorations are quite similar to accessories. But instead of appearing below the message, they appear next to the author's username, next to the clan tag, role icon, etc.
 
@@ -187,7 +189,7 @@ Define the `renderMessageDecoration` method on your plugin object to make use of
 
 ## Member List Decorations
 
-![](../../../assets/screenshots/member-decor.png)
+![](../../../assets/screenshots/plugin-api/member-decor.png)
 
 Same as message decorations, except they appear next to members in the member list.
 

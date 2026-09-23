@@ -41,5 +41,8 @@ export default defineConfig({
                 }
             ]
         })
-    ]
+    ],
+    vite: {
+        assetsInclude: ["src/assets/**/*"]
+    }
 });
