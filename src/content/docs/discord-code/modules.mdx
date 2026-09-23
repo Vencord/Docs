@@ -5,7 +5,7 @@ sidebar:
     order: 2
 ---
 
-import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { Tabs, TabItem, Aside } from "@astrojs/starlight/components";
 
 Discord uses Webpack (actually [rspack](https://rspack.rs/)) to bundle its code into modules and chunks.
 
@@ -64,6 +64,10 @@ Specifically, this chunk pushes one single module with the ID `532446`.
 
 A bigger chunk could contain dozens or even hundreds of modules.
 
+<Aside>
+    `require` isn't the require from Node.js that you might be used to, but an instance of [WebpackRequire](https://github.com/Vendicated/Vencord/blob/main/packages/discord-types/webpack/index.d.ts#L71)
+</Aside>
+
 ## Modules
 
 Let's look at the same module from above again.
@@ -74,7 +78,7 @@ Switch between the different representations to understand how the minified code
 
 - Each module has this exact same structure:
     - A function taking three variables, module, exports, and require.
-    - Exports are defined at the top. Export names are usually one or two letter names.
+    - Exports are defined at the top. Export names are usually one or two letter names.[^1]
     - Next come imports. These use the require function to load other modules by their numeric IDs.
     - Finally, the module's actual code is executed.
 - This specific module
@@ -83,7 +87,7 @@ Switch between the different representations to understand how the minified code
         1. `477900`: React JSX runtime
         2. `582128`: React itself. Only imported for side effects and not directly used in the module.
         3. `331322`: Module containing the `B` component that is used in the exported React component.
-- You might find this syntax odd: `(0, a.jsx)(...)`. It's essentially the same as `a.jsx(...)` with a minor difference that doesn't matter for us.
+- You might find this syntax odd: `(0, a.jsx)(...)`. It's essentially the same as `a.jsx(...)` with a minor difference that doesn't matter for us.[^2]
 - `jsx(Component, props)` and `jsxs(Component, props)` are what `<Component {...props} />` is compiled to.
 
 <Tabs>
@@ -150,3 +154,9 @@ Switch between the different representations to understand how the minified code
     </TabItem>
 
 </Tabs>
+
+---
+
+[^1]: Sometimes you will see a module with human-readable module names. This is typically because the module is used in a way Webpack can't statically analyze; therefore, it must preserve the original source names. eg: `let bar = something(); require("foo")[bar]`
+
+[^2]: ECMAScript modules require that `this` is `undefined` in strict mode. Webpack must ensure this is upheld when calling exported functions. `(0, obj.func)` is an indirect call that ensures `this` is `undefined` and not `obj`.
