@@ -91,9 +91,9 @@ Next we will search for this ID to locate where this string is used in the code.
 :::note
 You may see duplicate results, with one being called something like `WebpackModule867730` and the other one being called something like `e4ca9ba2f914abc4.js`.
 
-What this means is that the [module](../modules#modules) this code is in was patched by a plugin. Whenever a module is patched, it is extracted into its own file called `WebpackModuleXXXXXX`.
+What this means is that the [module](/discord-code/modules#modules) this code is in was patched by a plugin. Whenever a module is patched, it is extracted into its own file called `WebpackModuleXXXXXX`.
 
-So the first result is the actual module in use. The second result is the [chunk](../modules#chunks) this module was contained in. However the module in this chunk is no longer used.
+So the first result is the actual module in use. The second result is the [chunk](/discord-code/modules#chunks) this module was contained in. However the module in this chunk is no longer used.
 :::
 
 ### Searching by CSS Classes / IDs
@@ -109,11 +109,11 @@ Now search for this CSS class or ID in the Sources tab. You might find a `.css` 
 ![](../../../assets/screenshots/find-code/class-search2.png)
 ![](../../../assets/screenshots/find-code/class-search3.png)
 
-You will notice that this is only a small [module](../modules#modules) which exports one or more css classes. The export names may be short one or two letter names.
+You will notice that this is only a small [module](/discord-code/modules#modules) which exports one or more css classes. The export names may be short one or two letter names.
 If so, take note of the mangled export name corresponding to the CSS class you are interested in.
 
 Now look for the ID of this module, in our case it's `447538`.
-If you are confused, see the [modules](../modules#modules) documentation for more information.
+If you are confused, see the [modules](/discord-code/modules#modules) documentation for more information.
 
 Search for this ID to find other modules that import this module. In our case, there is one result, which imports the CSS module as `at`.
 
