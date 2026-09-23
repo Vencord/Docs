@@ -1,0 +1,107 @@
+---
+title: Using Disccord's Code
+description: How to use Discord's code in your own plugins.
+sidebar:
+    order: 4
+---
+
+import { Aside, Tabs, TabItem } from "@astrojs/starlight/components";
+
+After you've [found some of Discord's code](../../discord-code/find-code), you might want to use it in your own plugin.
+There are a few ways to do this, depending on the exact code you want to use.
+
+## Webpack Finders
+You can use webpack finders to search discord's webpack module
+
+These are all wrappers built on the [find](#find) primitive.
+
+<Aside title="Lazy Finds">
+    Most finds you will see in actual code will be suffixed with `Lazy` (eg: `findByCodeLazy`, not `findByCode`).
+    This is because when the find runs, at top level, webpack isn't loaded yet so there's nothing to find.
+    The lazy version returns a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
+    that runs the find when you first access any property or call it.
+
+    All the below finders have lazy versions, and you should use those.
+</Aside>
+
+### findByCode
+```ts
+type CodeFilter = (string | RegExp)[];
+declare function findByCode(...filters: CodeFilter): any;
+```
+
+findByCode takes a list of `CodeFilter` and searches webpack exports **not modules** for an export that matches *all* of the filters
+
+#### Example
+<Tabs>
+<TabItem label="target.js" icon="seti:javascript">
+```js
+0,
+function(module, exports, require) {
+    require.d(exports, {
+        // minified export name
+        xx: () => W,
+        zz: () => X,
+    }),
+    // imports ...
+    let S = require(1)
+      , I = require(2)
+      , T = require(3);
+    let A = unique.code[123];
+    function X() {
+        return "Invalid Origin";
+    }
+    function W(e, t, n) {
+        let o = S.A.getApplication(t);
+        if ("string" == typeof n)
+            if (I.a(n)) {
+                throw new S.B({
+                    closeCode: T.INVALID_ORIGIN
+                },"Invalid Origin")
+            } else {
+                I.b(n);
+            }
+        }
+        o = I.c();
+        let {foo: i, bar: d; baz: r} = o;
+        e.application = {
+            foo: i,
+            bar: d,
+            baz: r,
+        }
+    }
+}
+```
+</TabItem>
+<TabItem label="other.js" icon="seti:javascript">
+```js
+0,
+function(module, exports, require) {
+    require.d(exports, {
+        // minified export name
+        aa: () => A,
+    }),
+    function A(f) {
+        return f.application;
+    }
+}
+```
+</TabItem>
+</Tabs>
+
+In order to find the function `W`, from `target.js` above, we can use the following code
+
+```ts
+const doSpecialThing = findByCodeLazy('"Invalid Origin"', '.application');
+// rest of your plugin
+```
+
+we can't do `findByCodeLazy('.application')` because that would also match `A` in `other.js`, which we don't want.
+
+We also can't do `findByCodeLazy('"Invalid Origin"')` because that would also match `X`, which we also don't want.A
+
+Something like `findByCodeLazy("unique.code[123]", ".application")` wouldn't work because modules are not searched, only the exports of modules.
+
+
+
+### Find
